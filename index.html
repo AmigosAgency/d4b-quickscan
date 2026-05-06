@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data &amp; AI Quickscan | Dynamics4Business</title>
+  <meta name="description" content="Ontdek in 2 minuten waar in jouw organisatie de grootste Data & AI kansen liggen. Een eerlijke quickscan van Dynamics4Business." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="brand">
+        <span class="brand-mark">D4B</span>
+        <span class="brand-name">Dynamics<span class="brand-accent">4</span>Business</span>
+      </a>
+      <span class="brand-tagline">Powerful solutions, personal approach.</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <span class="eyebrow">Data &amp; AI Quickscan</span>
+        <h1>Waar liggen jouw kansen met Data &amp; AI?</h1>
+        <p class="lead">
+          Beantwoord vijf eerlijke vragen en ontdek in twee minuten waar in jouw organisatie
+          de grootste winst te halen is. Geen hype, wel concreet inzicht.
+        </p>
+        <a href="#quickscan" class="btn btn-primary">Start de quickscan</a>
+      </div>
+    </section>
+
+    <section class="intro">
+      <div class="container intro-grid">
+        <div class="intro-card">
+          <h3>Herken je dit?</h3>
+          <ul>
+            <li>Rapportages uit meerdere systemen die elkaar tegenspreken</li>
+            <li>Processen die draaien op Excel en handmatig werk</li>
+            <li>Losse tools en experimenten zonder samenhang</li>
+            <li>Onduidelijkheid over waar AI écht waarde toevoegt</li>
+          </ul>
+        </div>
+        <div class="intro-card highlight">
+          <h3>De juiste vraag stellen</h3>
+          <p class="bad"><strong>❌ Verkeerde vraag:</strong><br />Wat kunnen we met AI?</p>
+          <p class="good"><strong>✔ Juiste vraag:</strong><br />Welk proces kost ons vandaag te veel tijd, geld of fouten?</p>
+          <p class="muted">Zet je AI op een slecht proces? Dan krijg je een sneller en duurder slecht proces.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="quickscan" class="quickscan">
+      <div class="container">
+        <div class="quickscan-header">
+          <span class="eyebrow">In 2 minuten</span>
+          <h2>De quickscan</h2>
+          <p>Beantwoord deze vijf vragen eerlijk. Elke 'ja' is een signaal.</p>
+        </div>
+
+        <div class="progress-wrap" aria-hidden="true">
+          <div class="progress-bar"><div id="progress" class="progress-fill"></div></div>
+          <div class="progress-meta"><span id="progress-text">0 van 5 beantwoord</span></div>
+        </div>
+
+        <form id="quickscan-form" class="questions" novalidate>
+          <!-- Questions injected by JS -->
+        </form>
+
+        <div class="actions">
+          <button type="button" id="submit-btn" class="btn btn-primary" disabled>Bekijk mijn uitslag</button>
+          <button type="button" id="reset-btn" class="btn btn-ghost" hidden>Opnieuw invullen</button>
+        </div>
+
+        <div id="result" class="result" hidden aria-live="polite">
+          <div class="result-card">
+            <span class="result-eyebrow">Jouw uitslag</span>
+            <h3 id="result-title"></h3>
+            <p id="result-score" class="result-score"></p>
+            <p id="result-message"></p>
+
+            <div id="result-details" class="result-details"></div>
+
+            <div class="result-cta">
+              <a href="https://dynamics4business.nl" target="_blank" rel="noopener" class="btn btn-primary">Plan een gratis AI-spreekuur</a>
+              <p class="muted small">We kijken samen naar je processen en geven eerlijk advies — ook over wat (nog) niet zinvol is.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cases">
+      <div class="container">
+        <span class="eyebrow">Uit de praktijk</span>
+        <h2>Planningsagent bij Dynamics4Business</h2>
+        <p class="lead-light">
+          Power Platform Consultant Jerry Suiker bouwde een Copilot Planning Agent voor het
+          plannen van stand-by diensten. De agent werkt met vooraf gedefinieerde spelregels,
+          houdt rekening met beschikbaarheid en voorkeuren, en brengt structuur in een
+          terugkerende taak.
+        </p>
+        <div class="cases-grid">
+          <div class="case-stat">
+            <strong>−</strong>
+            <span>Minder planningsfouten</span>
+          </div>
+          <div class="case-stat">
+            <strong>↓</strong>
+            <span>Minder heen-en-weer afstemmen</span>
+          </div>
+          <div class="case-stat">
+            <strong>✓</strong>
+            <span>Mens houdt de regie</span>
+          </div>
+        </div>
+        <p class="muted">
+          Belangrijkste les: AI werkt pas als de instructies kloppen en het proces helder is.
+          Techniek is het makkelijke deel.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> Dynamics4Business</span>
+      <a href="https://dynamics4business.nl" target="_blank" rel="noopener">dynamics4business.nl</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
