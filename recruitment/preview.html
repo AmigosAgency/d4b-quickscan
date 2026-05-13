@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Werken bij Dynamics4Business — concept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B0B0F;
+    --ink-700:#1A1B22;
+    --ink-500:#3A3D4A;
+    --paper:#FFFFFF;
+    --paper-50:#F6F6F4;
+    --line:#E6E6E4;
+    --accent:#C7F25C;
+    --accent-ink:#0B0B0F;
+    --brand-blue:#2C6BED;
+    --radius:24px;
+    --shadow:0 2px 0 var(--line), 0 24px 60px -32px rgba(11,11,15,.18);
+    --maxw:1280px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:'Poppins',system-ui,-apple-system,Segoe UI,sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Lexend',sans-serif;font-weight:700;letter-spacing:-.02em;line-height:1;margin:0}
+  h1{font-size:clamp(44px,6vw,84px);line-height:.95}
+  h2{font-size:clamp(32px,4vw,56px);line-height:1.02;margin-bottom:24px}
+  h3{font-size:clamp(22px,2vw,28px);font-weight:600;line-height:1.15}
+  h4{font-size:18px;font-weight:600;line-height:1.3}
+  p{margin:0 0 16px}
+  a{color:inherit;text-decoration:none}
+  .container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  @media (min-width:768px){.container{padding:0 48px}}
+  @media (min-width:1200px){.container{padding:0 64px}}
+
+  /* Header */
+  header.site{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:saturate(160%) blur(10px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .logo{font-family:'Lexend';font-weight:700;font-size:20px;letter-spacing:-.02em}
+  .logo span{background:var(--accent);padding:2px 6px;border-radius:6px}
+  nav ul{display:none;gap:28px;list-style:none;margin:0;padding:0;font-size:15px;font-weight:500}
+  @media (min-width:1000px){nav ul{display:flex}}
+  .nav-cta{display:inline-flex;gap:8px}
+
+  /* Buttons */
+  .btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 24px;border-radius:14px;font-weight:500;font-size:15px;transition:transform .15s ease,box-shadow .15s ease,background .15s ease;cursor:pointer;border:0;line-height:1}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--accent);color:var(--accent-ink)}
+  .btn-primary:hover{box-shadow:0 12px 24px -12px rgba(199,242,92,.7)}
+  .btn-secondary{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn-secondary:hover{background:var(--ink);color:#fff}
+  .btn-ghost-light{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.35)}
+  .btn-ghost-light:hover{border-color:#fff;background:rgba(255,255,255,.06)}
+  .btn-lg{min-height:60px;padding:0 32px;font-size:16px}
+  .arr::after{content:"→";display:inline-block;transition:transform .15s ease}
+  .btn:hover .arr::after, .arr:hover::after{transform:translateX(3px)}
+
+  /* Section spacing */
+  section{padding:80px 0}
+  @media (min-width:900px){section{padding:120px 0}}
+
+  /* Hero */
+  .hero{padding:48px 0 0}
+  @media (min-width:900px){.hero{padding:72px 0 0}}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:500;color:var(--ink-500);background:var(--paper-50);border:1px solid var(--line);padding:8px 16px;border-radius:999px;margin-bottom:24px}
+  .eyebrow .dot{width:8px;height:8px;border-radius:999px;background:var(--accent);box-shadow:0 0 0 4px rgba(199,242,92,.25)}
+  .hero-grid{display:grid;grid-template-columns:1fr;gap:48px;align-items:center}
+  @media (min-width:1000px){.hero-grid{grid-template-columns:1.15fr 1fr;gap:64px}}
+  .hero h1 .hl{background:linear-gradient(transparent 60%, var(--accent) 60%);padding:0 6px}
+  .hero p.lead{font-size:20px;line-height:1.55;color:var(--ink-500);max-width:560px;margin:24px 0 32px}
+  .cta-row{display:flex;flex-wrap:wrap;gap:12px}
+  .hero-trust{display:flex;flex-wrap:wrap;gap:18px;margin-top:28px;font-size:14px;color:var(--ink-500)}
+  .hero-trust span{display:inline-flex;align-items:center;gap:8px}
+  .hero-art{position:relative}
+  .hero-art img{width:100%;height:auto;border-radius:var(--radius);display:block;aspect-ratio:4/5;object-fit:cover;background:var(--paper-50)}
+  .hero-art::before{content:"";position:absolute;left:-24px;bottom:-24px;width:60%;height:60%;background:var(--accent);border-radius:var(--radius);z-index:-1}
+
+  /* Stats band */
+  .stats{background:var(--ink-700);color:#fff;border-radius:var(--radius);margin-top:64px;padding:32px 24px;display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+  @media (min-width:900px){.stats{grid-template-columns:repeat(4,1fr);padding:40px}}
+  .stat .num{font-family:'Lexend';font-weight:700;font-size:48px;line-height:1;color:var(--accent)}
+  .stat .lbl{font-size:14px;color:#cfd0d4;margin-top:6px}
+  .stats .badge{font-family:'Lexend';font-weight:600;font-size:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);padding:10px 14px;border-radius:12px;display:inline-flex;align-items:center;gap:8px}
+
+  /* Trust strip */
+  .trust{padding:56px 0;background:var(--paper-50);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .trust-head{font-size:13px;font-weight:500;color:var(--ink-500);letter-spacing:.04em;text-transform:uppercase;margin-bottom:24px;text-align:center}
+  .trust-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px 36px}
+  .trust-row .pill{font-family:'Lexend';font-weight:600;font-size:14px;color:var(--ink-500);padding:10px 16px;background:#fff;border:1px solid var(--line);border-radius:999px}
+
+  /* Pillars */
+  .pillars{display:grid;grid-template-columns:1fr;gap:24px}
+  @media (min-width:900px){.pillars{grid-template-columns:repeat(3,1fr);gap:32px}}
+  .pillar{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:32px;box-shadow:var(--shadow)}
+  .pillar .ic{width:56px;height:56px;border-radius:14px;background:var(--accent);display:grid;place-items:center;font-size:28px;margin-bottom:18px}
+  .pillar h3{margin-bottom:10px}
+  .pillar p{color:var(--ink-500);margin-bottom:16px}
+  .link-ghost{font-weight:600;color:var(--ink);border-bottom:2px solid var(--accent);padding-bottom:2px;display:inline-block}
+
+  /* Mosaic */
+  .mosaic{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:140px;gap:14px}
+  @media (min-width:900px){.mosaic{grid-auto-rows:180px;gap:18px}}
+  .mosaic .cell{border-radius:18px;background:var(--paper-50) center/cover no-repeat;position:relative;overflow:hidden}
+  .mosaic .c1{grid-column:span 4;grid-row:span 2;background-color:#22232b}
+  .mosaic .c2{grid-column:span 2;grid-row:span 1;background-color:#dedfd8}
+  .mosaic .c3{grid-column:span 2;grid-row:span 1;background-color:#cfdbb6}
+  .mosaic .c4{grid-column:span 3;grid-row:span 1;background-color:#1f2a18}
+  .mosaic .c5{grid-column:span 3;grid-row:span 1;background-color:#d7d3c8}
+  .mosaic .c1 .quote{position:absolute;left:24px;right:24px;bottom:24px;color:#fff;font-family:'Lexend';font-weight:500;font-size:clamp(18px,1.5vw,24px);line-height:1.3}
+  .mosaic .c1 .quote .who{display:block;margin-top:14px;font-family:'Poppins';font-weight:400;font-size:13px;color:#cfd0d4}
+
+  /* Vacancies */
+  .filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px}
+  .chip{padding:10px 16px;border-radius:999px;font-size:14px;font-weight:500;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+  .chip.is-active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .vac-grid{display:grid;grid-template-columns:1fr;gap:20px}
+  @media (min-width:900px){.vac-grid{grid-template-columns:repeat(2,1fr);gap:24px}}
+  .vac{position:relative;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);transition:transform .15s ease,box-shadow .15s ease;display:flex;flex-direction:column;gap:14px;min-height:340px}
+  .vac:hover{transform:translateY(-4px)}
+  .vac::before{content:"";position:absolute;left:0;top:24px;bottom:24px;width:4px;background:transparent;border-radius:0 4px 4px 0}
+  .vac:hover::before{background:var(--accent)}
+  .tags{display:flex;flex-wrap:wrap;gap:8px}
+  .tag{font-size:12px;font-weight:500;color:var(--ink-500);background:var(--paper-50);border:1px solid var(--line);padding:6px 10px;border-radius:8px}
+  .tag.hot{background:#E8FFB7;border-color:#C7F25C;color:#3a4d12}
+  .vac h3{margin:4px 0 6px}
+  .vac .pitch{color:var(--ink-500);font-size:15px;line-height:1.55;flex:1}
+  .skill-row{display:flex;flex-wrap:wrap;gap:6px}
+  .skill{font-size:12px;font-weight:500;background:#EDF2FF;color:#1F3FB4;padding:5px 10px;border-radius:8px;border:1px solid #DCE4FB}
+  .vac-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px dashed var(--line);padding-top:16px;margin-top:6px}
+  .salary{font-family:'Lexend';font-weight:600;font-size:15px}
+  .salary span{color:var(--ink-500);font-weight:400;font-size:13px;display:block;line-height:1.2}
+
+  /* No match block */
+  .nomatch{margin-top:40px;background:var(--paper-50);border:1px solid var(--line);border-radius:var(--radius);padding:32px;display:grid;grid-template-columns:1fr;gap:24px;align-items:center}
+  @media (min-width:900px){.nomatch{grid-template-columns:1.4fr 1fr;padding:40px}}
+  .nomatch h3{margin-bottom:8px}
+  .nomatch p{color:var(--ink-500);margin:0}
+  .nomatch .actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-start}
+  @media (min-width:900px){.nomatch .actions{justify-content:flex-end}}
+
+  /* Process */
+  .proc{background:var(--ink);color:#fff;border-radius:32px;padding:48px 28px}
+  @media (min-width:900px){.proc{padding:72px 56px}}
+  .proc h2{color:#fff}
+  .proc-intro{color:#cfd0d4;max-width:680px;margin-bottom:48px}
+  .steps{display:grid;grid-template-columns:1fr;gap:24px}
+  @media (min-width:1000px){.steps{grid-template-columns:repeat(5,1fr);gap:18px}}
+  .step{position:relative;padding-top:8px}
+  .step .num{width:44px;height:44px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-family:'Lexend';font-weight:700;font-size:18px;display:grid;place-items:center;margin-bottom:18px}
+  .step h4{color:#fff;margin-bottom:6px}
+  .step .time{font-size:12px;color:var(--accent);font-weight:500;margin-bottom:10px;display:block}
+  .step p{color:#cfd0d4;font-size:14px;line-height:1.55}
+  .proc-foot{margin-top:40px;display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);padding:12px 18px;border-radius:999px;font-size:14px}
+  .proc-foot strong{color:var(--accent)}
+
+  /* Perks */
+  .perks{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media (min-width:900px){.perks{grid-template-columns:repeat(4,1fr);gap:24px}}
+  .perk{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px}
+  .perk .pic{width:44px;height:44px;border-radius:12px;background:var(--accent);display:grid;place-items:center;font-size:22px;margin-bottom:14px}
+  .perk h4{margin-bottom:4px}
+  .perk p{font-size:14px;color:var(--ink-500);margin:0;line-height:1.5}
+
+  /* Story */
+  .story{display:grid;grid-template-columns:1fr;gap:40px;align-items:center}
+  @media (min-width:900px){.story{grid-template-columns:1.1fr 1fr;gap:64px}}
+  .story-video{position:relative;border-radius:var(--radius);overflow:hidden;background:#22232b;aspect-ratio:16/10}
+  .story-video .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:76px;height:76px;border-radius:999px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:28px}
+  .quote-block blockquote{font-family:'Lexend';font-weight:500;font-size:clamp(22px,2vw,30px);line-height:1.35;margin:0 0 24px}
+  .quote-block .who{font-size:14px;color:var(--ink-500)}
+
+  /* HR contact band */
+  .hr-band{background:var(--ink-700);color:#fff;border-radius:32px;overflow:hidden}
+  .hr-grid{display:grid;grid-template-columns:1fr;gap:24px;padding:40px 28px;align-items:center}
+  @media (min-width:900px){.hr-grid{grid-template-columns:1.4fr 1fr;padding:64px 56px;gap:64px}}
+  .hr-band h2{color:#fff}
+  .hr-band p{color:#cfd0d4;max-width:560px}
+  .hr-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+  .hr-person{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:28px;text-align:center}
+  .hr-photo{width:140px;height:140px;border-radius:999px;background:#cfdbb6 center/cover no-repeat;margin:0 auto 16px;border:4px solid var(--accent)}
+  .hr-person h4{color:#fff;margin-bottom:2px}
+  .hr-person .role{font-size:13px;color:var(--accent);margin-bottom:14px}
+  .hr-person .meta{font-size:13px;color:#cfd0d4;line-height:1.7}
+  .hr-person .meta a{color:#fff;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px}
+  .hr-person .resp{margin-top:14px;display:inline-flex;align-items:center;gap:8px;font-size:12px;color:#cfd0d4;background:rgba(199,242,92,.12);padding:6px 12px;border-radius:999px}
+
+  /* FAQ */
+  .faq-grid{display:grid;grid-template-columns:1fr;gap:12px}
+  @media (min-width:900px){.faq-grid{grid-template-columns:repeat(2,1fr);gap:18px}}
+  details{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 24px;transition:box-shadow .15s ease}
+  details[open]{box-shadow:var(--shadow)}
+  details summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:'Lexend';font-weight:600;font-size:17px}
+  details summary::-webkit-details-marker{display:none}
+  details summary::after{content:"+";font-size:24px;color:var(--ink-500);transition:transform .15s ease}
+  details[open] summary::after{transform:rotate(45deg)}
+  details p{margin-top:14px;color:var(--ink-500);font-size:15px;line-height:1.6}
+
+  /* Final CTA */
+  .final{background:var(--ink);color:#fff;border-radius:32px;padding:64px 28px;position:relative;overflow:hidden}
+  @media (min-width:900px){.final{padding:96px 64px}}
+  .final::after{content:"";position:absolute;right:-80px;top:-80px;width:280px;height:280px;border-radius:999px;background:var(--accent);opacity:.9}
+  .final h2{color:#fff;max-width:720px;position:relative;z-index:1}
+  .final p{color:#cfd0d4;margin:8px 0 32px;position:relative;z-index:1}
+  .final .row{display:flex;flex-wrap:wrap;align-items:center;gap:18px;position:relative;z-index:1}
+  .final .phone{font-size:15px;color:#cfd0d4}
+  .final .phone a{color:#fff;border-bottom:2px solid var(--accent);padding-bottom:2px;font-weight:600}
+
+  /* Footer */
+  footer.site{background:var(--paper-50);border-top:1px solid var(--line);padding:48px 0 24px;font-size:14px;color:var(--ink-500)}
+  .foot-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  @media (min-width:900px){.foot-grid{grid-template-columns:2fr 1fr 1fr 1fr}}
+  .foot-grid h5{font-family:'Lexend';font-weight:600;font-size:14px;color:var(--ink);margin:0 0 12px}
+  .foot-grid ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .copy{border-top:1px solid var(--line);margin-top:32px;padding-top:18px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px}
+
+  /* Sticky mobile CTA */
+  .sticky-cta{position:fixed;left:12px;right:12px;bottom:12px;display:flex;gap:8px;background:rgba(11,11,15,.88);backdrop-filter:blur(8px);padding:10px;border-radius:18px;z-index:60;box-shadow:0 12px 30px -10px rgba(0,0,0,.4)}
+  .sticky-cta .btn{flex:1;justify-content:center;min-height:48px;border-radius:12px}
+  @media (min-width:900px){.sticky-cta{display:none}}
+
+  /* Helpers */
+  .section-head{max-width:760px;margin:0 0 48px}
+  .section-head p{color:var(--ink-500);font-size:18px;margin-top:8px}
+  .label-eye{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--ink);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+  .label-eye::before{content:"";display:inline-block;width:24px;height:2px;background:var(--accent)}
+
+  /* Image placeholders that imitate the brand photo style */
+  .ph-photo{background:linear-gradient(135deg,#1f2a18 0%,#3b4a26 50%,#cfdbb6 100%);display:grid;place-items:center;color:rgba(255,255,255,.6);font-size:13px;letter-spacing:.05em;text-transform:uppercase}
+  .ph-photo.alt{background:linear-gradient(135deg,#22232b 0%,#3a3d4a 50%,#cfdbb6 100%)}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site">
+  <div class="container nav">
+    <a href="#" class="logo">d<span>4</span>b</a>
+    <nav><ul>
+      <li>Solutions</li><li>Branches</li><li>Cases</li><li>Over ons</li><li><strong>Werken bij</strong></li><li>Support</li>
+    </ul></nav>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="#vacatures">Bekijk vacatures</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow"><span class="dot"></span> Wij zoeken <strong style="margin:0 4px">4 nieuwe collega's</strong> in Vinkel ('s-Hertogenbosch)</span>
+        <h1>Bouw mee aan de slimste Microsoft-oplossingen van Nederland — en zet er je eigen <span class="hl">stempel</span> op.</h1>
+        <p class="lead">Bij Dynamics4Business werk je met collega's die hun vak écht leuk vinden. Geen ellenlange goedkeuringslagen, wel ruimte om mee te denken over klanten, techniek en hoe we het hier doen. Business Central, Power Platform, Copilot — en jij erbij.</p>
+        <div class="cta-row">
+          <a href="#vacatures" class="btn btn-primary btn-lg arr">Bekijk de 4 vacatures</a>
+          <a href="#contact" class="btn btn-secondary btn-lg">Plan een kennismakingskoffie</a>
+        </div>
+        <div class="hero-trust">
+          <span>☕ Reactie binnen 1 werkdag</span>
+          <span>🤝 Korte lijnen met team &amp; directie</span>
+          <span>📍 Vinkel · Venlo · Deventer</span>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="ph-photo" style="border-radius:24px;aspect-ratio:4/5">Foto · Team in kantoor (DY1A281)</div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="num">45+</div><div class="lbl">Collega's</div></div>
+      <div class="stat"><div class="num">1998</div><div class="lbl">Opgericht</div></div>
+      <div class="stat"><div class="num">4.7<span style="font-size:24px;color:#cfd0d4">/5</span></div><div class="lbl">Medewerkertevredenheid</div></div>
+      <div class="stat" style="display:flex;align-items:center"><span class="badge">⬢ Microsoft Solutions Partner</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust">
+  <div class="container">
+    <div class="trust-head">Microsoft-partner sinds 1998. Vier specialisaties. Eén team.</div>
+    <div class="trust-row">
+      <span class="pill">Business Applications</span>
+      <span class="pill">Data &amp; AI</span>
+      <span class="pill">Digital &amp; App Innovation</span>
+      <span class="pill">Great Place to Work</span>
+      <span class="pill">Top ICT-werkgever</span>
+    </div>
+  </div>
+</div>
+
+<!-- WHY -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <span class="label-eye">Waarom D4B</span>
+      <h2>Drie redenen waarom mensen blijven.</h2>
+      <p>Geen perks-poster. Wel wat onze collega's écht noemen als we ze vragen waarom ze hier (nog steeds) zitten.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="ic">📚</div>
+        <h3>Vakmanschap dat groeit</h3>
+        <p>Eigen academy, Microsoft-certificeringen op kosten van de zaak, en collega's die je écht meenemen in hun expertise. We meten geen uren — we meten of jij beter wordt.</p>
+        <a class="link-ghost arr" href="#">Lees onze leerafspraken</a>
+      </div>
+      <div class="pillar">
+        <div class="ic">🤝</div>
+        <h3>Mensen boven processen</h3>
+        <p>Korte lijnen met klant én team. Je werkt aan projecten waar je iets te zeggen hebt. Vrijdagmiddag-borrel, jaarlijks teamweekend, en een directie die je gewoon belt.</p>
+        <a class="link-ghost arr" href="#">Ontdek onze cultuur</a>
+      </div>
+      <div class="pillar">
+        <div class="ic">⚙️</div>
+        <h3>Impact op echte bedrijven</h3>
+        <p>Onze klanten zijn middelgrote tot grote organisaties in service, productie, handel en installatie. Wat jij bouwt, gaat morgen mee de fabriek of de servicebus in.</p>
+        <a class="link-ghost arr" href="#">Bekijk klant-cases</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOSAIC -->
+<section style="padding-top:0">
+  <div class="container">
+    <div class="section-head">
+      <span class="label-eye">Cultuur in beeld</span>
+      <h2>Geen stockfoto's. Dit zijn we, op een doordeweekse dag.</h2>
+    </div>
+    <div class="mosaic">
+      <div class="cell c1 ph-photo alt">
+        <span style="opacity:0">x</span>
+        <div class="quote">"Ik wilde niet 'gewoon nog een consultant' zijn. Hier mag ik bouwen aan onze eigen producten én klanten helpen. Dat is voor mij de mix."
+          <span class="who">— Jerry Suiker, Business Central Developer · 4 jaar bij D4B</span>
+        </div>
+      </div>
+      <div class="cell c2 ph-photo">Foto · Kantoor Vinkel</div>
+      <div class="cell c3 ph-photo">Foto · Teamlunch</div>
+      <div class="cell c4 ph-photo alt">Foto · Klantbezoek</div>
+      <div class="cell c5 ph-photo">Foto · Teamweekend</div>
+    </div>
+  </div>
+</section>
+
+<!-- VACATURES -->
+<section id="vacatures" style="background:var(--paper-50)">
+  <div class="container">
+    <div class="section-head" style="display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:24px;max-width:none">
+      <div>
+        <span class="label-eye">Open vacatures</span>
+        <h2>4 vacatures open.<br/>Welke past bij jou?</h2>
+      </div>
+      <div style="font-size:14px;color:var(--ink-500)">📍 Alle locaties · Hybride mogelijk</div>
+    </div>
+
+    <div class="filters">
+      <button class="chip is-active">Alle (4)</button>
+      <button class="chip">Business Applications</button>
+      <button class="chip">Power Platform &amp; Copilot</button>
+      <button class="chip">Managed Services</button>
+      <button class="chip">Development</button>
+    </div>
+
+    <div class="vac-grid">
+      <article class="vac">
+        <div class="tags">
+          <span class="tag hot">● Nieuw</span>
+          <span class="tag">Power Platform</span>
+          <span class="tag">Fulltime</span>
+          <span class="tag">'s-Hertogenbosch · Hybride</span>
+        </div>
+        <h3>Microsoft Power Platform &amp; Copilot Consultant</h3>
+        <p class="pitch">Bouw bedrijfsprocessen om met Power Apps, Power Automate, Power BI en Copilot Studio — voor klanten die écht willen versnellen.</p>
+        <div class="skill-row">
+          <span class="skill">Power Apps</span><span class="skill">Power Automate</span><span class="skill">Dataverse</span><span class="skill">Copilot Studio</span>
+        </div>
+        <div class="vac-foot">
+          <div class="salary">€4.500 – €7.000<span>bruto p/m, 40u</span></div>
+          <a class="btn btn-primary arr">Bekijk vacature</a>
+        </div>
+      </article>
+
+      <article class="vac">
+        <div class="tags">
+          <span class="tag">Business Applications</span>
+          <span class="tag">Fulltime</span>
+          <span class="tag">'s-Hertogenbosch · Hybride</span>
+        </div>
+        <h3>Dynamics 365 Business Central Consultant</h3>
+        <p class="pitch">Adviseer klanten over BC-implementaties van blueprint tot go-live. Jij vertaalt proces naar werkende oplossing.</p>
+        <div class="skill-row">
+          <span class="skill">Business Central</span><span class="skill">Implementatie</span><span class="skill">Training</span><span class="skill">Adoption</span>
+        </div>
+        <div class="vac-foot">
+          <div class="salary">€4.200 – €6.800<span>bruto p/m, 40u</span></div>
+          <a class="btn btn-primary arr">Bekijk vacature</a>
+        </div>
+      </article>
+
+      <article class="vac">
+        <div class="tags">
+          <span class="tag">Managed Services</span>
+          <span class="tag">Fulltime</span>
+          <span class="tag">'s-Hertogenbosch · Hybride</span>
+        </div>
+        <h3>Microsoft Managed Services Consultant</h3>
+        <p class="pitch">Eerste aanspreekpunt voor klanten. Jij maakt support strak, snel en first-time-right.</p>
+        <div class="skill-row">
+          <span class="skill">Support</span><span class="skill">SLA</span><span class="skill">Business Central</span><span class="skill">Klantcontact</span>
+        </div>
+        <div class="vac-foot">
+          <div class="salary">€3.600 – €5.400<span>bruto p/m, 40u</span></div>
+          <a class="btn btn-primary arr">Bekijk vacature</a>
+        </div>
+      </article>
+
+      <article class="vac">
+        <div class="tags">
+          <span class="tag hot">● Nieuw</span>
+          <span class="tag">Development</span>
+          <span class="tag">Fulltime</span>
+          <span class="tag">'s-Hertogenbosch · Hybride</span>
+        </div>
+        <h3>Dynamics 365 Business Central Developer</h3>
+        <p class="pitch">Combineer techniek en innovatie. Bouw maatwerk, integraties en denk mee over architectuur.</p>
+        <div class="skill-row">
+          <span class="skill">AL</span><span class="skill">Business Central</span><span class="skill">Azure</span><span class="skill">API</span>
+        </div>
+        <div class="vac-foot">
+          <div class="salary">€4.500 – €7.500<span>bruto p/m, 40u</span></div>
+          <a class="btn btn-primary arr">Bekijk vacature</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="nomatch">
+      <div>
+        <h3>Niets gevonden dat past?</h3>
+        <p>We werven het hele jaar door op talent. Vertel ons in 5 minuten waar jij goed in bent en waar je naartoe wil — dan plannen we een open kennismaking.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-primary arr">Open sollicitatie</a>
+        <a class="btn btn-secondary">💬 WhatsApp Jacky</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section>
+  <div class="container">
+    <div class="proc">
+      <span class="label-eye" style="color:#fff">Sollicitatieproces</span>
+      <h2>Van klik tot contract in gemiddeld 12 dagen.</h2>
+      <p class="proc-intro">Geen ATS-tunnel. Geen assessment van een uur. Wel: één belafspraak, één inhoudelijk gesprek, één meeloopdag, en daarna een helder aanbod.</p>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><h4>Je solliciteert</h4><span class="time">5 minuten</span><p>CV is genoeg, motivatie mag in 3 zinnen via WhatsApp of mail.</p></div>
+        <div class="step"><div class="num">2</div><h4>Belafspraak met Jacky</h4><span class="time">binnen 2 werkdagen · 20 min</span><p>Korte kennismaking, jouw verhaal, onze verwachting.</p></div>
+        <div class="step"><div class="num">3</div><h4>Vakinhoudelijk gesprek</h4><span class="time">60 min</span><p>Met je toekomstige team-lead. Geen trucs, wel inhoud.</p></div>
+        <div class="step"><div class="num">4</div><h4>Meeloopdag</h4><span class="time">4 uur</span><p>Zit naast een collega, doe mee aan een echte klantcase, lunch met het team.</p></div>
+        <div class="step"><div class="num">5</div><h4>Aanbod</h4><span class="time">binnen 3 werkdagen</span><p>Helder, schriftelijk, met ruimte om vragen te stellen.</p></div>
+      </div>
+      <div class="proc-foot">⏱ Gemiddelde doorlooptijd: <strong>&nbsp;12 dagen</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- PERKS -->
+<section style="background:var(--paper-50);padding-top:96px">
+  <div class="container">
+    <div class="section-head">
+      <span class="label-eye">Wat je krijgt</span>
+      <h2>Arbeidsvoorwaarden zonder kleine lettertjes.</h2>
+    </div>
+    <div class="perks">
+      <div class="perk"><div class="pic">💶</div><h4>Marktconform salaris</h4><p>Passend bij ervaring, jaarlijkse beoordeling.</p></div>
+      <div class="perk"><div class="pic">🏖️</div><h4>30 vakantiedagen</h4><p>Basis 25 + 5 extra D4B-dagen.</p></div>
+      <div class="perk"><div class="pic">🏡</div><h4>Hybride werken</h4><p>2-3 dagen kantoor, rest waar jij wil.</p></div>
+      <div class="perk"><div class="pic">🎓</div><h4>€2.500 opleidingsbudget</h4><p>Per jaar, plus alle MS-certs vergoed.</p></div>
+      <div class="perk"><div class="pic">💻</div><h4>Laptop &amp; telefoon</h4><p>Naar keuze, ook privé te gebruiken.</p></div>
+      <div class="perk"><div class="pic">🛡️</div><h4>Pensioen</h4><p>Werkgever betaalt twee derde.</p></div>
+      <div class="perk"><div class="pic">🚗</div><h4>Mobiliteit</h4><p>Auto, NS-Business Card of budget.</p></div>
+      <div class="perk"><div class="pic">📈</div><h4>Bonusregeling</h4><p>Groeit het bedrijf, dan groei jij mee.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section>
+  <div class="container">
+    <div class="story">
+      <div class="story-video ph-photo alt">
+        <div class="play">▶</div>
+      </div>
+      <div class="quote-block">
+        <span class="label-eye">Stem van het team</span>
+        <blockquote>"Toen ik solliciteerde dacht ik: weer zo'n implementatiekantoor. Het verschil zit in hoe ze met elkaar omgaan — en met klanten. Niemand zit hier z'n contract uit."</blockquote>
+        <div class="who"><strong>Naam Collega</strong> · Senior BC Consultant · 6 jaar bij D4B</div>
+        <div style="margin-top:24px"><a class="link-ghost arr" href="#">Meer verhalen op LinkedIn</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HR CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="hr-band">
+      <div class="hr-grid">
+        <div>
+          <span class="label-eye" style="color:#fff">Open sollicitatie</span>
+          <h2>Geen vacature die past? Bel mij gewoon.</h2>
+          <p>Soms past het lijstje niet bij wat jij kan. Vertel mij in 5 minuten waar je goed in bent en waar je naartoe wil — dan kijken we samen of D4B voor jou werkt. Antwoord op je mail of WhatsApp binnen één werkdag.</p>
+          <div class="hr-actions">
+            <a class="btn btn-primary btn-lg arr">Stuur open sollicitatie</a>
+            <a class="btn btn-ghost-light btn-lg">📞 +31 6 127 107 91</a>
+            <a class="btn btn-ghost-light btn-lg">💬 WhatsApp Jacky</a>
+          </div>
+        </div>
+        <div class="hr-person">
+          <div class="hr-photo ph-photo" style="background:linear-gradient(135deg,#d7d3c8,#cfdbb6)"></div>
+          <h4>Jacky Das</h4>
+          <div class="role">HR Advisor</div>
+          <div class="meta">
+            <a href="mailto:jacky.das@d4b.nl">jacky.das@d4b.nl</a><br/>
+            <a href="tel:+31612710791">+31 (0)6 127 107 91</a>
+          </div>
+          <div class="resp">● Gemiddeld antwoord: 4 uur</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="background:var(--paper-50)">
+  <div class="container">
+    <div class="section-head">
+      <span class="label-eye">Veelgestelde vragen</span>
+      <h2>Twijfel je nog ergens over?</h2>
+    </div>
+    <div class="faq-grid">
+      <details><summary>Werk ik op kantoor of thuis?</summary><p>Hybride. Gemiddeld 2 dagen op kantoor in Vinkel (of Venlo / Deventer), de rest waar jij productief bent. Sommige rollen vragen meer klantbezoeken.</p></details>
+      <details><summary>Moet ik Microsoft-gecertificeerd zijn?</summary><p>Niet om te starten. Wel om door te groeien — en daar betalen wij voor. Alle relevante MS-examens en cursussen vergoeden we, inclusief studietijd.</p></details>
+      <details><summary>Hoe groot zijn jullie?</summary><p>45+ collega's, drie locaties (Vinkel, Venlo, Deventer), opgericht in 1998. Klein genoeg om elkaar te kennen, groot genoeg voor serieuze projecten.</p></details>
+      <details><summary>Welke klanten doen jullie?</summary><p>Middelgrote tot grote organisaties in service &amp; projecten, productie, equipment, (groot)handel en installatie. Internationale klanten via onze multisite-aanpak.</p></details>
+      <details><summary>Hoe ziet een werkdag eruit?</summary><p>Geen twee dagen hetzelfde. Klantsessie, ontwikkeling, sparren met collega's, soms een teamlunch. Vrijdagmiddag = borrel of demo-uurtje.</p></details>
+      <details><summary>Kan ik parttime werken?</summary><p>Ja, vanaf 32 uur is in overleg vrijwel altijd mogelijk. Ouderschapsverlof en flexibele schooluren regelen we soepel.</p></details>
+      <details><summary>Wat als ik twijfel of ik pas?</summary><p>Bel Jacky. 20 minuten, vrijblijvend, eerlijk advies — ook als het 'nee' wordt.</p></details>
+      <details><summary>Hoe snel kan ik beginnen?</summary><p>Zodra je opzegtermijn het toelaat. Gemiddelde sollicitatie tot tekenen: 12 dagen.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section>
+  <div class="container">
+    <div class="final">
+      <span class="label-eye" style="color:#fff">Laatste oproep</span>
+      <h2>Klaar om kennis te maken?</h2>
+      <p>Bekijk de vacatures, of bel Jacky direct. 20 minuten, vrijblijvend.</p>
+      <div class="row">
+        <a class="btn btn-primary btn-lg arr">Bekijk de 4 vacatures</a>
+        <span class="phone">of bel <a href="tel:+31612710791">+31 6 127 107 91</a></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="logo" style="margin-bottom:12px">d<span>4</span>b</div>
+        <p style="max-width:340px">Microsoft Solutions Partner sinds 1998. Business Central, Power Platform, Copilot — voor service, productie, handel en installatie.</p>
+      </div>
+      <div>
+        <h5>Werken bij</h5>
+        <ul><li>Vacatures</li><li>Cultuur</li><li>Sollicitatieproces</li><li>Open sollicitatie</li></ul>
+      </div>
+      <div>
+        <h5>Snelle links</h5>
+        <ul><li>Over ons</li><li>Cases</li><li>Evenementen</li><li>Contact</li></ul>
+      </div>
+      <div>
+        <h5>Locaties</h5>
+        <ul><li>Vinkel ('s-Hertogenbosch)</li><li>Venlo</li><li>Deventer</li><li>085 303 86 60</li></ul>
+      </div>
+    </div>
+    <div class="copy">
+      <span>© 2026 Dynamics4Business · Privacy · Algemene voorwaarden</span>
+      <span>Linkedin · YouTube</span>
+    </div>
+  </div>
+</footer>
+
+<!-- STICKY MOBILE CTA -->
+<div class="sticky-cta">
+  <a class="btn btn-primary" href="#vacatures">Vacatures</a>
+  <a class="btn btn-ghost-light">💬 WhatsApp</a>
+</div>
+
+</body>
+</html>
